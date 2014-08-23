@@ -1,3 +1,16 @@
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/shortly');
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function(){
+  console.log('Connected to MongoDB');
+  
+})
+
+
+module.exports = db;
+
+/*
 var Bookshelf = require('bookshelf');
 var path = require('path');
 
@@ -41,5 +54,4 @@ db.knex.schema.hasTable('users').then(function(exists) {
     });
   }
 });
-
-module.exports = db;
+*/

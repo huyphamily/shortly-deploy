@@ -82,7 +82,7 @@ module.exports = function(grunt) {
 
     shell: {
       prodServer: {
-        command: 'git push azure master'
+        command: 'git push --force azure master'
       }
     },
   });
@@ -109,10 +109,16 @@ module.exports = function(grunt) {
     grunt.task.run([ 'watch' ]);
   });
 
+
   ////////////////////////////////////////////////////
   // Main grunt tasks
   ////////////////////////////////////////////////////
-
+  grunt.registerTask('log', function(){
+    grunt.event.on('error', function(e){
+      console.log('ERROR:', e);
+      console.log('ERROR:', arguments);
+    })
+  })
   grunt.registerTask('test', [
     'mochaTest'
   ]);
@@ -138,6 +144,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('deploy', [
     // add your deploy tasks here
+    'log',
     'lint',
     'test',
     'build',
